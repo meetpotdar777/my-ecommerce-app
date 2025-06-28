@@ -223,7 +223,7 @@ const customStyles = `
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7); /* Solid black with 70% opacity */
+    background: #FFFFFF; /* Explicit white background */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -239,22 +239,36 @@ const customStyles = `
   }
 
   .modal-content-custom {
-    background-color: #FFF0F5; /* Very Light Pink for modal content */
+    background-color: #FF6699; /* Darker Pink for modal content */
     border-radius: 1rem;
     padding: 2rem;
     width: 90%;
     max-width: 800px;
     max-height: 90vh;
     overflow-y: auto;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 20px rgba(255, 102, 153, 0.6), 0 15px 40px rgba(0, 0, 0, 0.4); /* Pink glow + stronger shadow */
     transform: translateY(-50px);
     opacity: 0;
     transition: all 0.3s ease-in-out;
+    border: 1px solid rgba(255, 102, 153, 0.7); /* Darker pink border */
   }
 
   .modal-backdrop.show .modal-content-custom {
     transform: translateY(0);
     opacity: 1;
+  }
+
+  /* Text within modal content */
+  .modal-content-custom p {
+    color: #333333; /* Dark grey for general text */
+  }
+
+  .modal-content-custom .text-muted.small {
+    color: #555555 !important; /* Slightly lighter dark grey for muted text, using !important for specificity */
+  }
+
+  .modal-content-custom label {
+      color: #333333; /* Dark grey for labels */
   }
 
   /* Favorite Icon */
@@ -634,7 +648,8 @@ const ProductQuickViewModal = ({ product, onClose, isFavorite, onToggleFavorite,
         onClick={(e) => e.stopPropagation()}
       >
         <div className="d-flex justify-content-between align-items-start mb-3">
-          <h3 id="quickViewModalTitle" className="fw-bold" style={{fontFamily: 'Playfair Display, serif'}}>{product.name}</h3>
+          {/* Product Name */}
+          <h3 id="quickViewModalTitle" className="fw-bold" style={{fontFamily: 'Playfair Display, serif', color: 'var(--text-dark-heading)'}}>{product.name}</h3>
           <button type="button" className="btn-close" aria-label="Close" onClick={onClose}></button>
         </div>
         <div className="row">
@@ -643,16 +658,19 @@ const ProductQuickViewModal = ({ product, onClose, isFavorite, onToggleFavorite,
                  onError={(e) => { e.target.onerror = null; e.target.src = `https://placehold.co/250x250/cccccc/333333?text=${product.name.split(' ')[0]}`; }} />
           </div>
           <div className="col-md-7 d-flex flex-column">
-            <p className="text-muted small mb-1" style={{fontFamily: 'Poppins, sans-serif'}}>{product.category}</p>
-            <p className="lead flex-grow-1" style={{fontFamily: 'Poppins, sans-serif'}}>{product.description}</p>
+            {/* Category */}
+            <p className="text-muted small mb-1" style={{fontFamily: 'Poppins, sans-serif', color: '#555555'}}>{product.category}</p>
+            {/* Description */}
+            <p className="lead flex-grow-1" style={{fontFamily: 'Poppins, sans-serif', color: '#333333'}}>{product.description}</p>
             <div className="d-flex align-items-center mb-2">
               <span className="text-warning me-1">★</span> {product.rating} ({product.numReviews} reviews)
             </div>
+            {/* Price */}
             <h4 className="product-price mb-3">${product.price}</h4>
 
             {/* Quantity Selector */}
             <div className="d-flex align-items-center mb-3">
-              <label htmlFor="quantity" className="form-label mb-0 me-2">Quantity:</label>
+              <label htmlFor="quantity" className="form-label mb-0 me-2" style={{color: '#333333'}}>Quantity:</label>
               <div className="input-group" style={{width: '120px'}}>
                 <button className="btn btn-outline-secondary" type="button" onClick={() => handleQuantityChange(-1)} disabled={quantity <= 1}>-</button>
                 <input type="text" className="form-control text-center" value={quantity} readOnly style={{width: '50px'}}/>
