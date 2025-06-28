@@ -87,7 +87,9 @@ Then, configure your tailwind.config.js to include your source files (usually sr
 /* src/index.css */
 
 @tailwind base;
+
 @tailwind components;
+
 @tailwind utilities;
 
 /* Add Google Fonts */
